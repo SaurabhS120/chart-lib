@@ -1,7 +1,13 @@
 library chart_lib;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
+import 'package:flutter/widgets.dart';
+
+class Chart extends StatelessWidget{
+  const Chart({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text("Chart widget");
+  }
+
 }
