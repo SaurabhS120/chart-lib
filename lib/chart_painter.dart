@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class LineChartPainter extends CustomPainter {
@@ -67,11 +69,19 @@ class GraphLinePainter{
   }
 
   void drawGraph(List<GraphLineCoordinates> coordinates){
-    for(int i=0;i<coordinates.length-1;i++){
-      final startCoordinate = coordinates[i];
-      final endCoordinate = coordinates[i+1];
+    List<GraphLineCoordinates> scaledCoords = _scale(coordinates);
+    for(int i=0;i<scaledCoords.length-1;i++){
+      final startCoordinate = scaledCoords[i];
+      final endCoordinate = scaledCoords[i+1];
       _line(x1: startCoordinate.x, y1: startCoordinate.y, x2: endCoordinate.x, y2: endCoordinate.y);
     }
+  }
+  
+  List<GraphLineCoordinates> _scale(List<GraphLineCoordinates> coordinates) {
+    double maxY = coordinates.map((e)=>e.y).reduce((a,b)=>max(a,b))..ceil();
+    double pixelValueY = ((height-LineChartPainter.chartPadding*2))/maxY;
+    return coordinates.map((e)=>GraphLineCoordinates(e.x, e.y*pixelValueY)).toList();
+    
   }
 
 }
