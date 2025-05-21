@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class LineChartPainter extends CustomPainter {
-  static const double chartPadding = 12.0;
+  static const double chartPadding = 36.0;
   static const double horizontalGapBetweenGraph = 24.0;
   static const double verticalGapBetweenGraph = 24.0;
   @override
@@ -78,9 +78,11 @@ class GraphLinePainter{
   }
   
   List<GraphLineCoordinates> _scale(List<GraphLineCoordinates> coordinates) {
+    double maxX = coordinates.map((e)=>e.x).reduce((a,b)=>max(a,b))..ceil();
     double maxY = coordinates.map((e)=>e.y).reduce((a,b)=>max(a,b))..ceil();
+    double pixelValueX = ((width-LineChartPainter.chartPadding*2))/maxX;
     double pixelValueY = ((height-LineChartPainter.chartPadding*2))/maxY;
-    return coordinates.map((e)=>GraphLineCoordinates(e.x, e.y*pixelValueY)).toList();
+    return coordinates.map((e)=>GraphLineCoordinates(e.x*pixelValueX, e.y*pixelValueY)).toList();
     
   }
 
